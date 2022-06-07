@@ -4,10 +4,13 @@
 
 void	print_upper(std::string s)
 {
-	int		i = -1;
+	size_t		i = 0;
 
-	while (++i < s.length())
+	while (i < s.size())
+	{
 		s.at(i) = std::toupper(s.at(i));
+		++i;
+	}
 	std::cout << s;
 }
 

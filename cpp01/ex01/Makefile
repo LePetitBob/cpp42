@@ -1,4 +1,4 @@
-NAME = phonebook
+NAME = brainz2
 
 INC_DIR = 	$(shell find includes -type d)
 
@@ -10,7 +10,9 @@ vpath %.cpp $(foreach dir, $(SRC_DIR), $(dir):)
 
 vpath %.hpp $(foreach dir, $(INC_DIR), $(dir):)
 
-SRC = phonebook.cpp contact.cpp
+SRC = main.cpp zombiehorde.cpp zombie.cpp
+
+INC =
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.cpp=%.o))
 

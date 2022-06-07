@@ -1,8 +1,8 @@
-NAME = megaphone
+NAME = brain
 
 OBJ_DIR	= obj
 
-SRC = megaphone.cpp
+SRC = main.cpp
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.cpp=%.o))
 
