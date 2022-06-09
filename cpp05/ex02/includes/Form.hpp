@@ -23,7 +23,7 @@ class Form
 		bool 			getSigned(void);
 		void 			setSigned(bool signature);
 		void			beSigned(Bureaucrat & trainee);
-		void			executed(Bureaucrat & executor);
+		void			beExecuted(Bureaucrat & trainee);
         class GradeTooHighException : public std::exception {
             const char	*what(void) const throw();
         };
