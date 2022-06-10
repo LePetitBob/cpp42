@@ -15,10 +15,12 @@ class Bureaucrat {
         int 			getGrade(void);
         void 			upGrade(void);
         void 			downGrade(void);
-        class GradeTooHighException : public std::exception {
+        class GradeTooHighException : public std::exception
+		{
             const char	*what(void) const throw();
         };
-        class GradeTooLowException : public std::exception {
+        class GradeTooLowException : public std::exception
+		{
             const char	*what(void) const throw();
         };
     private:

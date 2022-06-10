@@ -8,12 +8,12 @@ int main( void )
 	Fixed d;
 
 	c = b;
-	std::cout << a.getRawBits() << std::endl;
-	std::cout << b.getRawBits() << std::endl;
-	std::cout << c.getRawBits() << std::endl;
-	c.setRawBits(42);
+	std::cout << a.getrawBits() << std::endl;
+	std::cout << b.getrawBits() << std::endl;
+	std::cout << c.getrawBits() << std::endl;
+	c.setrawBits(42);
 	d = c;
-	std::cout << c.getRawBits() << std::endl;
-	std::cout << d.getRawBits() << std::endl;
+	std::cout << c.getrawBits() << std::endl;
+	std::cout << d.getrawBits() << std::endl;
 	return 0;
 }

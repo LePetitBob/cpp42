@@ -10,19 +10,19 @@ Fixed::Fixed(const Fixed& fix): _rawBits(fix._rawBits)
 	std::cout << "Copy constructor has been called" << std::endl;
 }
 
-int Fixed::getRawBits(void) const
+int Fixed::getrawBits(void) const
 {
 	return (_rawBits);
 }
 
-void	Fixed::setRawBits(int const raw)
+void	Fixed::setrawBits(int const raw)
 {
 	_rawBits = raw;
 }
 
-Fixed&	Fixed::operator=(const Fixed &fix)
+Fixed&	Fixed::operator=(const Fixed &rhs)
 {
-	_rawBits = fix.getRawBits();
+	_rawBits = rhs.getrawBits();
 	std::cout << "Copy assignment operator called" << std::endl;
 	return (*this);
 }

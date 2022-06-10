@@ -15,9 +15,9 @@ int main(void){
     std::cout << C << std::endl;
     std::cout << D << std::endl;
     std::cout << E << std::endl;
-    A.beSigned(a);
-    A.beSigned(b);
-    A.beExecuted(c);
+    a.signForm(A);
+    b.signForm(A);
+    c.signForm(A);
     B = A;
     B.beSigned(b);
     C.beSigned(c);

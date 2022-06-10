@@ -23,11 +23,13 @@ class Form
 		bool 			getSigned(void);
 		void 			setSigned(bool signature);
 		void			beSigned(Bureaucrat & trainee);
-		void			executed(Bureaucrat & executor);
-        class GradeTooHighException : public std::exception {
+		void			beExecuted(Bureaucrat & executor);
+        class GradeTooHighException : public std::exception
+		{
             const char	*what(void) const throw();
         };
-        class GradeTooLowException : public std::exception {
+        class GradeTooLowException : public std::exception
+		{
             const char	*what(void) const throw();
         };
 };

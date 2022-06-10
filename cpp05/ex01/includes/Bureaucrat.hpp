@@ -3,6 +3,7 @@
 # include <iostream>
 # include <string>
 # include <stdexcept>
+# include "Form.hpp"
 
 class Bureaucrat {
     public:
@@ -15,6 +16,7 @@ class Bureaucrat {
         int 			getGrade(void);
         void 			upGrade(void);
         void 			downGrade(void);
+		void			signForm(Form & form);
         class GradeTooHighException : public std::exception {
             const char	*what(void) const throw();
         };

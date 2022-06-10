@@ -47,6 +47,15 @@ const char *Bureaucrat::GradeTooLowException::what(void) const throw(){
     return ("Grade higher than 150, you must be either very clumsy or terribly stupid \n");
 }
 
+void	Bureaucrat::signForm(Form & form);
+{
+	if (_grade <= form._grade)
+		form.beSigned(this);
+	else
+		std::cout << "Form " << form._name << " can't be signed by " << _name << std::endl;
+}
+
+
 void Bureaucrat::_checkGrade(void){
     try
 	{
