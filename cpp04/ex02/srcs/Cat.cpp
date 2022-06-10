@@ -22,8 +22,15 @@ void	Cat::makeSound(void) const
 	std::cout << "ich ni san Nyaaaaa arigatoooooooo" << std::endl;
 }
 
+std::string	Cat::getIdea(int i) const
+{
+	return (this->_brain->getIdea(i));
+}
+
 Cat& Cat::operator=(Cat const & rhs)
 {
 	this->_type = rhs._type;
+	for (int i = 0 ; i < 100 ; i++)
+		this->_brain->setIdea(rhs.getIdea(i), i);
 	return (*this);
 }

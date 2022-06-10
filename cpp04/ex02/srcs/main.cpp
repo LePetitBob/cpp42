@@ -6,13 +6,16 @@
 int	main()
 {
 	// Animal			mammal;
-	Animal const	*cat = new Cat();
+	Animal 			*cat = new Cat();
+	Animal			*cat2;
 	Animal const	*dog = new Dog();
 	WrongAnimal const	*Wrong = new WrongCat();
 
 	// mammal.makeSound();
 	cat->makeSound();
 	dog->makeSound();
+	cat2 = cat;
+	cat2->makeSound();
 	Wrong->makeSound();
 	delete Wrong;
 	delete dog;

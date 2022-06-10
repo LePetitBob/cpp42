@@ -21,6 +21,16 @@ void	Brain::makeSound(void) const
 	std::cout << "ich ni san Nyaaaaa arigatoooooooo" << std::endl;
 }
 
+std::string	Brain::getIdea(int i) const
+{
+	return _ideas[i];
+}
+
+void	Brain::setIdea(std::string idea, int i)
+{
+	_ideas[i] = idea;
+}
+
 Brain& Brain::operator=(Brain const & rhs)
 {
 	for (int i = 0 ; i < 100 ; i++)

@@ -22,8 +22,15 @@ void	Dog::makeSound(void) const
 	std::cout << "bwouf :$p" << std::endl;
 }
 
+std::string	Dog::getIdea(int i) const
+{
+	return (this->_brain->getIdea(i));
+}
+
 Dog& Dog::operator=(Dog const & rhs)
 {
 	this->_type = rhs._type;
+	for (int i = 0 ; i < 100 ; i++)
+		this->_brain->setIdea(rhs.getIdea(i), i);
 	return (*this);
 }

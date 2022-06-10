@@ -10,9 +10,11 @@ class Brain
 	public:
 		Brain(void);
 		Brain(Brain const & parent);
-		Brain& operator=(Brain const & rhs);
+		Brain& 			operator=(Brain const & rhs);
 		~Brain();
-		void	makeSound(void) const;
+		void			makeSound(void) const;
+		std::string		getIdea(int i) const;
+		void			setIdea(std::string idea, int i);
 };
 
 #endif
