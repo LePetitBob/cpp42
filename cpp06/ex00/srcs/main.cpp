@@ -8,16 +8,12 @@ int main(int ac, char **av)
 		std::cout << "wir haben eine problem" << std::endl;
 		return (1);
 	}
-	std::string input = av[1];
-	if (IsInf(input))
-		return (0);
-	else if (IsDoubleOrFloat(input))
-		return (0);
-	else if (IsInt(input))
-		return (0);
-	else if (IsChar(input))
-		return (0);
-	Nan();
-	std::cout << "arbeit beendet" << std::endl;
+
+	Value val;
+	val.setStr(av[1]);
+	val.detectType();
+	val.convert();
+	val.display();
+
 	return (0);
 }

@@ -1,4 +1,4 @@
-NAME = serialisation
+NAME = Identify
 
 INC_DIR = 	$(shell find includes -type d)
 
@@ -10,11 +10,11 @@ vpath %.cpp $(foreach dir, $(SRC_DIR), $(dir):)
 
 vpath %.hpp $(foreach dir, $(INC_DIR), $(dir):)
 
-SRC = main.cpp Serialisation.cpp
+SRC = main.cpp Identify.cpp
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.cpp=%.o))
 
-CFLAGS =	-Wall -Wextra -Werror -std=c++98
+CFLAGS =	-Wall -Wextra -Werror -Wno-unused -std=c++98
 
 IFLAGS =	$(foreach dir, $(INC_DIR), -I $(dir))
 
