@@ -71,6 +71,17 @@ void	Form::beSigned(Bureaucrat & bureaucratUsr)
 	std::cout << bureaucratUsr.getName() << " couldn't sign " << _name << " because grade is too low" << std::endl;
 }
 
+// void	Form::execute(Bureaucrat const & executor) const
+// {
+// 	if (executor.getGrade() <= _gradeExec)
+// 	{
+// 		std::cout << executor.getName() << " executed " << _name << std::endl;
+// 		execute(executor);
+// 		return ;
+// 	}
+// 	std::cout << executor.getName() << " couldn't execute " << _name << " because grade is too low" << std::endl;
+// }`
+
 void Form::_checkGrades(void)
 {
 	if (_gradeSign < 1 || _gradeExec < 1)

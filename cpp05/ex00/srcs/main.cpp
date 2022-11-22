@@ -2,7 +2,7 @@
 
 int main(void){
     Bureaucrat a("Patrick", 0);
-    Bureaucrat b("Francis", 1);
+    Bureaucrat b;
     Bureaucrat c("Tommy", 1);
     Bureaucrat d;
     std::cout << a << std::endl;

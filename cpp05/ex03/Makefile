@@ -1,4 +1,4 @@
-NAME = Bureaucrat3
+NAME = Bureaucrat4
 
 INC_DIR = 	$(shell find includes -type d)
 
@@ -10,7 +10,7 @@ vpath %.cpp $(foreach dir, $(SRC_DIR), $(dir):)
 
 vpath %.hpp $(foreach dir, $(INC_DIR), $(dir):)
 
-SRC = main.cpp Bureaucrat.cpp Form.cpp PresidentialPardonForm.cpp RobotomyRequestForm.cpp ShrubberyCreationForm.cpp
+SRC = main.cpp Bureaucrat.cpp Form.cpp PresidentialPardonForm.cpp RobotomyRequestForm.cpp ShrubberyCreationForm.cpp Intern.cpp
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.cpp=%.o))
 

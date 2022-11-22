@@ -1,32 +1,52 @@
+#include "Bureaucrat.hpp"
 #include "Form.hpp"
+#include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 
-int main(void){
-    Bureaucrat  a("Patrick", 150);
-    Bureaucrat  b("Francis", 1);
-    Bureaucrat  c("Tommy", 75);
-    Form        A("POLE_EMPLOI", 5, 5);
-    Form        B;
-    Form        C("guide touristique", 130, 60);
-    Form        D("guide touristique nul", 150, 152);
-    Form        E("guide touristique des nullos", 152, 150);
+int main()
+{
+	srand(time(NULL));
+	Bureaucrat David( "David", 1);
+	std::cout << David << std::endl;
+	Bureaucrat Paul( "Paul", 147);
+	std::cout << Paul << std::endl;
 
-    std::cout << A << std::endl;
-    std::cout << B << std::endl;
-    std::cout << C << std::endl;
-    std::cout << D << std::endl;
-    std::cout << E << std::endl;
-    A.beSigned(a);
-    A.beSigned(b);
-    A.beExecuted(c);
-    B = A;
-    B.beSigned(b);
-    C.beSigned(c);
-    C.beExecuted(c);
-    D.beExecuted(b);
-    D.beSigned(b);
-    std::cout << "\n" << A << "\n" << std::endl;
-    std::cout << B << "\n" << std::endl;
-    std::cout << C << "\n" << std::endl;
-    std::cout << D << "\n" << std::endl;
-    return 0;
+	PresidentialPardonForm a("Les Francais");
+	RobotomyRequestForm yeay("robotomy form");
+	ShrubberyCreationForm b("Shrub");
+
+	try
+	{
+		Paul.signForm(a);
+		Paul.signForm(yeay);
+		Paul.signForm(b);
+	}
+	catch (std::exception &e)
+	{
+		std::cerr <<  e.what() << std::endl;
+	}
+
+
+	try
+	{
+		David.signForm(a);
+		David.signForm(yeay);
+		David.signForm(b);
+
+		Paul.executeForm(a);
+		Paul.executeForm(yeay);
+		Paul.executeForm(b);
+
+		David.executeForm(a);
+		David.executeForm(yeay);
+		David.executeForm(yeay);
+		David.executeForm(yeay);
+		David.executeForm(b);
+	}
+	catch (std::exception &e)
+	{
+		std::cerr <<  e.what() << std::endl;
+	}
+	return (0);
 }

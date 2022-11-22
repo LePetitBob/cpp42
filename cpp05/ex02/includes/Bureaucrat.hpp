@@ -5,6 +5,8 @@
 # include <stdexcept>
 # include "Form.hpp"
 
+class Form;
+
 class Bureaucrat {
     public:
         Bureaucrat();
@@ -12,11 +14,12 @@ class Bureaucrat {
         Bureaucrat(Bureaucrat const & parent);
         Bureaucrat & 	operator=(Bureaucrat const & rhs);
         ~Bureaucrat();
-        std::string		getName(void);
-        int 			getGrade(void);
+        std::string		getName(void) const;
+        int 			getGrade(void) const;
         void 			upGrade(void);
         void 			downGrade(void);
 		void			signForm(Form & form);
+		void			executeForm(Form const & form) const;
         class GradeTooHighException : public std::exception {
             const char	*what(void) const throw();
         };

@@ -1,7 +1,9 @@
 #ifndef FORM_HPP
 # define FORM_HPP
 # include "Bureaucrat.hpp"
+# include <stdlib.h>
 
+class Bureaucrat;
 class Form
 {
 	private:
@@ -9,7 +11,7 @@ class Form
 		bool				_signature;
 		int	const			_gradeSign;
 		int	const			_gradeExec;
-		void				_checkGrades(void);
+		int					_checkGrade(void);
 		bool				_isValid(void);
 	public:
 		Form(void);
@@ -21,9 +23,7 @@ class Form
 		int			 	getGradeSign(void);
 		int			 	getGradeExec(void);
 		bool 			getSigned(void);
-		void 			setSigned(bool signature);
-		void			beSigned(Bureaucrat & trainee);
-		void			beExecuted(Bureaucrat & executor);
+		virtual void	beSigned(Bureaucrat & bureaucratUsr);
         class GradeTooHighException : public std::exception
 		{
             const char	*what(void) const throw();

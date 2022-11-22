@@ -40,35 +40,37 @@ Bureaucrat & Bureaucrat::operator=(Bureaucrat const & rhs)
 }
 
 const char *Bureaucrat::GradeTooHighException::what(void) const throw(){
-    return ("Grade lower than 1, you must be either very clumsy or terribly stupid \n");
+    return ("Bureaucrat: grade too high\n");
 }
 
 const char *Bureaucrat::GradeTooLowException::what(void) const throw(){
-    return ("Grade higher than 150, you must be either very clumsy or terribly stupid \n");
+    return ("Bureaucrat: grade too high\n");
 }
 
-void	Bureaucrat::signForm(Form & form);
+void	Bureaucrat::signForm(Form & form)
 {
-	if (_grade <= form._grade)
-		form.beSigned(this);
+	if (form.getSigned() == false)
+	{
+		form.beSigned(*this);
+		return ;
+	}
 	else
-		std::cout << "Form " << form._name << " can't be signed by " << _name << std::endl;
+		std::cout << _name << " couldn't sign " << form.getName() << " because it is already signed" << std::endl;
 }
 
 
-void Bureaucrat::_checkGrade(void){
-    try
+void Bureaucrat::_checkGrade(void)
+{
+	if (_grade < 1)
 	{
-        if (this->_grade < 1)
-            throw Bureaucrat::GradeTooHighException(); 
-		else if (this->_grade > 150)
-            throw Bureaucrat::GradeTooLowException(); 
-    }
-	catch (const std::exception& e)
+		throw Form::GradeTooHighException();
+		_grade = 150;
+	}
+	else if (_grade > 150)
 	{
-        this->_grade = 150;
-        std::cout << e.what();
-    }
+		throw Form::GradeTooLowException();
+		_grade = 150;
+	}
 }
 
 void	Bureaucrat::upGrade(void)
