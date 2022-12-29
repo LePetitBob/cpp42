@@ -8,12 +8,13 @@ span::span(void)
 span::span(int size)
 {
 	_sizemax = size;
+	// _v.resize(size);
 }
 
 span::span(const span & parent)
 {
 	_v = parent._v;
-	_sizemax = parent._sizemax;
+	// _sizemax = parent._sizemax;
 }
 
 span::~span(void)
@@ -54,10 +55,8 @@ int	span::shortestSpan(void)
 	int shortest = *(std::max_element(_v.begin(), _v.end())) - *(std::min_element(_v.begin(), _v.end()));
 	for (std::vector<int>::iterator it = _v.begin(); it != _v.end(); it++)
 	{
-		// std::cout << "MORTECOUILLE" << std::endl;
 		for (std::vector<int>::iterator it2 = it; it2 != _v.end(); it2++)
 		{
-			// std::cout << "		fichtrebite" << std::endl;
 			if (it != it2 && abs(*it2 - *it) < shortest)
 				shortest = abs(*it2 - *it);
 		}
@@ -73,5 +72,8 @@ void	span::printSpan(void)
 
 void	span::fill(void)
 {
-	std::fill (_v.begin(), _v.end(), rand() % 999999);
+	srand(time(NULL));
+	_v.clear();
+	for (unsigned long i = 0; i < _sizemax; i++)
+		_v.push_back(rand() % 999999);
 }

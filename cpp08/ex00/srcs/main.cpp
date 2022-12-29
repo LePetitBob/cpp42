@@ -2,7 +2,7 @@
 
 int main( void )
 {
-	int	arr[] = {0, 0, 0, 5, 0, 0};
+	int	arr[] = {0, 0, 0, 6, 0, 0};
 	std::vector<int> vec(arr, arr + 6);
 	std::vector<int>::iterator it;
 	std::vector<int>::iterator it2 = vec.end();
