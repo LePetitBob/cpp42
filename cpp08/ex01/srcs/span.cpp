@@ -5,16 +5,15 @@ span::span(void)
 	_sizemax = 5;
 }
 
-span::span(int size)
+span::span(unsigned int size)
 {
 	_sizemax = size;
-	// _v.resize(size);
 }
 
 span::span(const span & parent)
 {
 	_v = parent._v;
-	// _sizemax = parent._sizemax;
+	_sizemax = parent._sizemax;
 }
 
 span::~span(void)
@@ -34,7 +33,7 @@ const char *span::NotEnoughValuesException::what(void) const throw(){
 	return ("\nError: Less than 2 values in span \n");
 }
 
-void	span::addNumber(int n)
+void	span::addNumber(unsigned int n)
 {
 	if (_v.size() == _sizemax)
 		throw span::NoMoreSpaceException();

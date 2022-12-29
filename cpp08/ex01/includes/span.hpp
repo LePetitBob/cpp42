@@ -16,10 +16,10 @@ class span
 
 	public :
 		span(void);
-		span(int size);
+		span(unsigned int size);
 		span(const span & parent);
 		~span(void);
-		void			addNumber(int n);
+		void			addNumber(unsigned int n);
 		int				longestSpan(void);
 		int				shortestSpan(void);
         class NoMoreSpaceException : public std::exception
