@@ -40,6 +40,13 @@ void	ApplyOperand(std::stack<int> & pile, char o, int *operand)
 	else if (o == '*')
 		pile.push(tmp * tmp2);
 	else if (o == '/')
+	{
+		if (tmp == 0)
+		{
+			std::cout << "Error\nDivision by zero" << std::endl;
+			exit(1);
+		}
 		pile.push(tmp2 / tmp);
+	}
 	return ;
 }
