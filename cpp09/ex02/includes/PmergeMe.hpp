@@ -13,18 +13,6 @@
 void	check_and_fill(int ac, char **av, std::vector<int> &v, std::deque<int> &d);
 
 template <typename T>
-void	MergeSort(T& v, int s, int e)
-{
-	if (s < e)
-	{
-		int m = (s + e) / 2;
-		MergeSort(v, s, m);
-		MergeSort(v, m + 1, e);
-		MergeSortedIntervals(v, s, m, e);
-	}
-}
-
-template <typename T>
 void	MergeSortedIntervals(T& v, int s, int m, int e)
 {
 	T temp;
@@ -57,5 +45,17 @@ void	MergeSortedIntervals(T& v, int s, int m, int e)
 	}
 	for (int i = s; i <= e; ++i)
 		v[i] = temp[i - s];
-}
+};
+
+template <typename T>
+void	MergeSort(T& v, int s, int e)
+{
+	if (s < e)
+	{
+		int m = (s + e) / 2;
+		MergeSort<T>(v, s, m);
+		MergeSort<T>(v, m + 1, e);
+		MergeSortedIntervals<T>(v, s, m, e);
+	}
+};
 #endif
