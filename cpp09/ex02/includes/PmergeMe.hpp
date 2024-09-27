@@ -1,61 +1,70 @@
-#ifndef PMERGEME_HPP
-# define PMERGEME_HPP
-# include <iomanip>
-# include <iostream>
-# include <ctime>
-# include <string.h>
-# include <stdlib.h>
-# include <sys/time.h>
-# include <vector>
-# include <deque>
-# include <algorithm>
+#pragma once
+
+#include <iomanip>
+#include <iostream>
+#include <ctime>
+#include <string.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <vector>
+#include <deque>
+#include <utility>
+#include <algorithm>
 
 void	check_and_fill(int ac, char **av, std::vector<int> &v, std::deque<int> &d);
 
 template <typename T>
-void	MergeSortedIntervals(T& v, int s, int m, int e)
+T generateJacobsthal(int count)
 {
-	T temp;
-
-	int i, j;
-	i = s;
-	j = m + 1;
-
-	while (i <= m && j <= e)
-	{
-		if (v[i] <= v[j])
-		{
-			temp.push_back(v[i]);
-			++i;
-		}
-		else {
-			temp.push_back(v[j]);
-			++j;
-		}
-	}
-	while (i <= m)
-	{
-		temp.push_back(v[i]);
-		++i;
-	}
-	while (j <= e)
-	{
-		temp.push_back(v[j]);
-		++j;
-	}
-	for (int i = s; i <= e; ++i)
-		v[i] = temp[i - s];
+    T sequence(count);
+    if (count > 0) sequence[0] = 0;
+    if (count > 1) sequence[1] = 1;
+    for (int i = 2; i < count; ++i)
+        sequence[i] = sequence[i-1] + 2 * sequence[i-2];
+    return sequence;
 };
 
 template <typename T>
-void	MergeSort(T& v, int s, int e)
+void merge(T& arr, int left, int mid, int right)
 {
-	if (s < e)
-	{
-		int m = (s + e) / 2;
-		MergeSort<T>(v, s, m);
-		MergeSort<T>(v, m + 1, e);
-		MergeSortedIntervals<T>(v, s, m, e);
-	}
+    T temp(arr.size());
+    int i = left, j = mid + 1, k = left;
+
+    while (i <= mid && j <= right)
+    {
+        if (arr[i] <= arr[j])
+            temp[k++] = arr[i++];
+        else
+            temp[k++] = arr[j++];
+    }
+    while (i <= mid)
+        temp[k++] = arr[i++];
+    while (j <= right)
+        temp[k++] = arr[j++];
+    for (int i = left; i <= right; ++i)
+        arr[i] = temp[i];
 };
-#endif
+
+template <typename T>
+void mergeInsertionSort(T& arr, int left, int right, const T& jacobsthal)
+{
+    if (left >= right)
+        return;
+    int n = right - left + 1;
+    if (n <= 1)
+        return;
+
+    int mid = left + (right - left) / 2;
+
+    mergeInsertionSort<T>(arr, left, mid, jacobsthal);
+    mergeInsertionSort<T>(arr, mid + 1, right, jacobsthal);
+
+    merge<T>(arr, left, mid, right);
+};
+
+template <typename T>
+void mergeInsertionSort(T& arr)
+{
+    T jacobsthal = generateJacobsthal<T>(arr.size());
+    mergeInsertionSort(arr, 0, arr.size() - 1, jacobsthal);
+};

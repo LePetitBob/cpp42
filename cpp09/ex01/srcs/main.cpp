@@ -20,16 +20,10 @@ int main( int ac, char **av )
 	{
 		if (av[1][i] == ' ')
 			++i;
-		else if (isdigit(av[1][i]))
+		else if (isdigit(av[1][i]) && av[1][i + 1] == ' ')
 		{
 			++values;
 			pile.push(av[1][i] - 48);
-			++i;
-		}
-		else if (isOperand(av[1][i]))
-		{
-			++operands;
-			ApplyOperand(pile, av[1][i], &operands);
 			++i;
 		}
 		else

@@ -10,6 +10,8 @@ vpath %.cpp $(foreach dir, $(SRC_DIR), $(dir):)
 
 vpath %.hpp $(foreach dir, $(INC_DIR), $(dir):)
 
+INC = PmergeMe.hpp
+
 SRC = main.cpp PmergeMe.cpp
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.cpp=%.o))
@@ -22,7 +24,7 @@ CC =	c++
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(INC_DIR)/$(INC)
 				$(CC) $(OBJ) $(CFLAGS) $(IFLAGS) -o $(NAME)
 
 $(OBJ_DIR)/%.o : %.cpp
