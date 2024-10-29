@@ -10,8 +10,28 @@
 #include <deque>
 #include <utility>
 #include <algorithm>
+#include <cmath>
 
-void	check_and_fill(int ac, char **av, std::vector<int> &v, std::deque<int> &d);
+class Node
+{
+private:
+    int value;
+    int pair;
+public:
+    Node():value(-1), pair(-1){};
+    Node(int val, int state):value(val), pair(state){};
+    ~Node(){};
+    int getPair(){return pair;};
+    int getValue(){return value;};
+};
+
+
+std::vector<Node>    reduce(std::vector<Node> arr);
+void	check_and_fill(int ac, char **av, std::vector<Node> &v, std::deque<Node> &d);
+void    adjust(std::vector<Node> &vec, std::deque<Node> &deq);
+void    print_array(std::vector<Node> &arr);
+// void    print_array(std::deque<int> arr);
+// void mergeInsert(std::vector<Node> &arr, int depth);
 
 template <typename T>
 T generateJacobsthal(int count)
@@ -24,47 +44,48 @@ T generateJacobsthal(int count)
     return sequence;
 };
 
-template <typename T>
-void merge(T& arr, int left, int mid, int right)
-{
-    T temp(arr.size());
-    int i = left, j = mid + 1, k = left;
+// template <typename T>
+// void merge(T& arr, int left, int mid, int right)
+// {
+//     T temp(arr.size());
+//     int i = left, j = mid + 1, k = left;
 
-    while (i <= mid && j <= right)
-    {
-        if (arr[i] <= arr[j])
-            temp[k++] = arr[i++];
-        else
-            temp[k++] = arr[j++];
-    }
-    while (i <= mid)
-        temp[k++] = arr[i++];
-    while (j <= right)
-        temp[k++] = arr[j++];
-    for (int i = left; i <= right; ++i)
-        arr[i] = temp[i];
-};
+//     while (i <= mid && j <= right)
+//     {
+//         if (arr[i] <= arr[j])
+//             temp[k++] = arr[i++];
+//         else
+//             temp[k++] = arr[j++];
+//     }
+//     while (i <= mid)
+//         temp[k++] = arr[i++];
+//     while (j <= right)
+//         temp[k++] = arr[j++];
+//     for (int i = left; i <= right; ++i)
+//         arr[i] = temp[i];
+// };
 
-template <typename T>
-void mergeInsertionSort(T& arr, int left, int right, const T& jacobsthal)
-{
-    if (left >= right)
-        return;
-    int n = right - left + 1;
-    if (n <= 1)
-        return;
+// template <typename T>
+// void mergeInsert(T& arr, int left, int right, const T& jacobsthal)
+// {
+//     if (left >= right)
+//         return;
+//     int n = right - left + 1;
+//     if (n <= 1)
+//         return;
 
-    int mid = left + (right - left) / 2;
+//     int mid = left + (right - left) / 2;
 
-    mergeInsertionSort<T>(arr, left, mid, jacobsthal);
-    mergeInsertionSort<T>(arr, mid + 1, right, jacobsthal);
+//     mergeInsert<T>(arr, left, mid, jacobsthal);
+//     mergeInsert<T>(arr, mid + 1, right, jacobsthal);
 
-    merge<T>(arr, left, mid, right);
-};
+//     merge<T>(arr, left, mid, right);
+// };
 
-template <typename T>
-void mergeInsertionSort(T& arr)
-{
-    T jacobsthal = generateJacobsthal<T>(arr.size());
-    mergeInsertionSort(arr, 0, arr.size() - 1, jacobsthal);
-};
+
+// template <typename T>
+// void mergeInsert(T& arr)
+// {
+       //TODO rmk jacobstahl use\\ T jacobsthal = generateJacobsthal<T>(arr.size());
+//     mergeInsert(arr, 0, arr.size() - 1, jacobsthal);
+// };
