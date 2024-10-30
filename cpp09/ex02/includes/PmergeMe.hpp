@@ -14,35 +14,65 @@
 
 class Node
 {
-private:
+protected:
     int value;
-    int pair;
+    Node *v1;
+    Node *v2;
 public:
-    Node():value(-1), pair(-1){};
-    Node(int val, int state):value(val), pair(state){};
+    Node():value(-1), v1(NULL), v2(NULL){};
+    Node(int val):value(val), v1(NULL), v2(NULL){};
+    Node(Node *n1, Node *n2):value(n1->getValue()), v1(n1), v2(n2){};
+    Node(Node *n):value(n->getValue()), v1(n->getV1()), v2(n->getV2()){};
     ~Node(){};
-    int getPair(){return pair;};
-    int getValue(){return value;};
+    int getValue(){
+        if(v1)
+            return v1->getValue();
+        return value;
+    };
+
+    Node *getV1(){
+        if (v1)
+            return v1;
+        return NULL;
+    };
+    Node *getV2(){
+        if (v2)
+            return v2;
+        return NULL;
+    };
+
+    int isPair(void){return (v1 && v2);};
+
+    void showPair(std::ostream & o) {
+        if (this->isPair()) {
+            v1->showPair(o);
+            o << "/";
+            v2->showPair(o);
+            o << " ";
+        } else {
+            o << value;
+        }
+    };
+
+    void deleteArr(){
+        if (v1 && v2) {
+            v1->deleteArr();
+            v2->deleteArr();
+        }
+        delete this;
+    };
 };
 
+std::ostream &  operator<<(std::ostream & o, Node & rhs);
 
-std::vector<Node>    reduce(std::vector<Node> arr);
-void	check_and_fill(int ac, char **av, std::vector<Node> &v, std::deque<Node> &d);
-void    adjust(std::vector<Node> &vec, std::deque<Node> &deq);
-void    print_array(std::vector<Node> &arr);
+std::vector<Node*>    reduce(std::vector<Node*> arr);
+void	check_and_fill(int ac, char **av, std::vector<Node*> &v, std::deque<Node*> &d);
+void    adjust(std::vector<Node*> &vec, std::deque<Node*> &deq);
+// void    print_array(std::vector<Node*> &arr);
 // void    print_array(std::deque<int> arr);
-// void mergeInsert(std::vector<Node> &arr, int depth);
+// void mergeInsert(std::vector<Node*> &arr, int depth);
 
-template <typename T>
-T generateJacobsthal(int count)
-{
-    T sequence(count);
-    if (count > 0) sequence[0] = 0;
-    if (count > 1) sequence[1] = 1;
-    for (int i = 2; i < count; ++i)
-        sequence[i] = sequence[i-1] + 2 * sequence[i-2];
-    return sequence;
-};
+int generateJacobsthal(int count);
 
 // template <typename T>
 // void merge(T& arr, int left, int mid, int right)
@@ -86,6 +116,5 @@ T generateJacobsthal(int count)
 // template <typename T>
 // void mergeInsert(T& arr)
 // {
-       //TODO rmk jacobstahl use\\ T jacobsthal = generateJacobsthal<T>(arr.size());
 //     mergeInsert(arr, 0, arr.size() - 1, jacobsthal);
 // };

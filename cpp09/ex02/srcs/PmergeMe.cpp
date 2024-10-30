@@ -1,6 +1,6 @@
 #include "PmergeMe.hpp"
 
-void	check_and_fill(int ac, char **av, std::vector<Node> &v, std::deque<Node> &d)
+void	check_and_fill(int ac, char **av, std::vector<Node*> &v, std::deque<Node*> &d)
 {
     Node n;
 	for (int i = 1; i < ac; i++)
@@ -19,59 +19,125 @@ void	check_and_fill(int ac, char **av, std::vector<Node> &v, std::deque<Node> &d
 			std::cout << "Error\nOut of range. Must be only positive integers" << std::endl;
 			exit(1);
 		}
-        std::vector<Node>::iterator it = v.begin();
+        std::vector<Node*>::iterator it = v.begin();
         while(it != v.end())
         {
-            if ((*it).getValue() == atoi(av[i]))
+            if ((*it)->getValue() == atoi(av[i]))
                 break ;
             ++it;
         }
         if (it == v.end())
         {
-            v.push_back(Node(atoi(av[i]), -1));
-            d.push_back(Node(atoi(av[i]), -1));
+            v.push_back(new Node(atoi(av[i])));
+            // d.push_back(new Node(atoi(av[i])));
+            d.size();
         }
 	}
 }
 
-void    adjust(std::vector<Node> &vec, std::deque<Node> &deq)
+void    adjust(std::vector<Node*> &vec, std::deque<Node*> &deq)
 {
     int size = vec.size(), n = 0;
     while (size > pow(2, n))
         ++n;
     while (size < pow(2, n))
     {
-        vec.push_back(Node());
-        deq.push_back(Node());
+        vec.push_back(new Node());
+        // deq.push_back(new Node());
+        deq.size();
         ++size;
     }
 }
 
-std::vector<Node>    reduce(std::vector<Node> arr)
+
+
+std::vector<Node*>    reduce(std::vector<Node*> arr)
 {
-    std::vector<Node> res;
-    int size = arr.size() / 2, i = 0, v1, v2;
+    std::vector<Node*> res;
+    int size = arr.size(), i = 0;
+    Node *v1, *v2;
     while (i < size)
     {
-        v1 = arr.at(i).getValue();
-        v2 = arr.at(i + size).getValue();
-        if (v1 > v2)
-            res.push_back(Node(v1, v2));
+        v1 = arr.at(i);
+        v2 = arr.at(i + 1);
+        if (v1->getValue() > v2->getValue())
+            res.push_back(new Node(v1, v2));
         else
-            res.push_back(Node(v2, v1));
-        ++i;
+            res.push_back(new Node(v2, v1));
+        i += 2;
     }
     return res;
 }
 
-void    print_array(std::vector<Node> &arr)
+// void    dichotomicSearch(std::vector<Node*> &arr, Node *n)
+// {
+// }
+
+// void BST(std::vector<Node*> &arr)
+// {
+//     int value = n->getV2()->getValue();
+//     if(arr.size() == 0)
+//         arr.push_back(new Node(n));
+//     // if(arr.size() == 1)
+//     //     arr.push_back(new Node(n->getV2()));
+//     else if(n->getValue() < n->getValue())
+//         n->left = insert(n->getValue(), n->left);
+//     else if(n->getValue() > n->getValue())
+//         n->right = insert(n->getValue(), n->right);
+//     else
+//         arr.insert()
+// }
+
+// std::vector<Node*>    expand(std::vector<Node*> arr)
+// {
+//     std::vector<Node*> res;
+//     int size = arr.size(), i = 0, count = 0, j = 0, j1, j2;
+
+//     // if (size == 0){
+//     //     res.push_back(new Node(arr[0]->getV1()));
+//     // }
+
+//     while (count < size){
+//         // j1 = generateJacobsthal(j) - 1;
+//         // j2 = generateJacobsthal(j + 1) - 1;
+//         // if (j2 > size)
+//         //     j2 = size - 1;
+//         // while (j1 > j2)
+//         // {
+//         //     j2 = generateJacobsthal(i) - generateJacobsthal(i - 1);
+//         //     --j2;
+//         //     dichotomicSearch(res, arr[j2]);
+//         // }
+//         // i += j2-j1;
+//         // ++j;
+//         // BST(res);
+//         ++count;
+//     }
+
+//     return res;
+// }
+
+int generateJacobsthal(int count)
 {
-    for (std::vector<Node>::iterator it = arr.begin(); it != arr.end(); ++it)
-        std::cout << (*it).getValue() << "/" << (*it).getPair() << "\t";
-    std::cout << std::endl;
+    if (count <= 0)
+        return 0;
+    std::vector<int> sequence;
+    sequence.push_back(0);
+    sequence.push_back(1);
+    for (int i = 2; i < count; ++i)
+        sequence.push_back(sequence.at(i-1) + 2 * sequence.at(i-2));
+    return sequence.at(count-1);
+};
+
+std::ostream &  operator<<(std::ostream & o, Node & rhs)
+{
+    rhs.showPair(o);
+	return (o);
 }
 
-// void mergeInsert(std::vector<Node> &arr, int depth)
+
+
+// void mergeInsert(std::vector<Node*> &arr, int depth)
 // {
 //     //! remove v
 //     std::cout << std::endl;

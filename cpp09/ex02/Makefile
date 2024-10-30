@@ -16,7 +16,7 @@ SRC = main.cpp PmergeMe.cpp
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.cpp=%.o))
 
-CFLAGS =	-Wall -Wextra -Werror -std=c++98
+CFLAGS =	-Wall -Wextra -Werror -std=c++98 -g3
 
 IFLAGS =	$(foreach dir, $(INC_DIR), -I $(dir))
 
