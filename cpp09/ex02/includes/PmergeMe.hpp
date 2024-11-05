@@ -24,6 +24,7 @@ public:
     Node(Node *n1, Node *n2):value(n1->getValue()), v1(n1), v2(n2){};
     Node(Node *n):value(n->getValue()), v1(n->getV1()), v2(n->getV2()){};
     ~Node(){};
+
     int getValue(){
         if(v1)
             return v1->getValue();
@@ -31,14 +32,11 @@ public:
     };
 
     Node *getV1(){
-        if (v1)
-            return v1;
-        return NULL;
+        return v1;
     };
+
     Node *getV2(){
-        if (v2)
-            return v2;
-        return NULL;
+        return v2;
     };
 
     int isPair(void){return (v1 && v2);};
@@ -54,6 +52,29 @@ public:
         }
     };
 
+
+    void printPair(std::ostream & o) {
+        if (this->isPair()) {
+            v1->getValue();
+            o << " ";
+            v2->getValue();
+            o << " ";
+        }
+        // else
+        //     o<<std::endl;
+    };
+
+    void printArray(std::ostream & o) {
+        if (this->isPair()) {
+            v1->printArray(o);
+            o << " ";
+            v2->printArray(o);
+        } else {
+            if (value != -1)
+                o << value;
+        }
+    };
+
     void deleteArr(){
         if (v1 && v2) {
             v1->deleteArr();
@@ -65,14 +86,15 @@ public:
 
 std::ostream &  operator<<(std::ostream & o, Node & rhs);
 
+Node    *nodeSelect(std::vector<Node*> pend, std::vector<int> jacob);
 std::vector<Node*>    reduce(std::vector<Node*> arr);
 void	check_and_fill(int ac, char **av, std::vector<Node*> &v, std::deque<Node*> &d);
 void    adjust(std::vector<Node*> &vec, std::deque<Node*> &deq);
-// void    print_array(std::vector<Node*> &arr);
-// void    print_array(std::deque<int> arr);
-// void mergeInsert(std::vector<Node*> &arr, int depth);
+std::vector<Node*>    expand(std::vector<Node*> arr);
+std::vector<Node*>::iterator getIterator(std::vector<Node*> arr, int index);
 
-int generateJacobsthal(int count);
+int BST(std::vector<Node*> arr, int low, int high, Node *x);
+std::vector<int> generateJacobsthal(int count);
 
 // template <typename T>
 // void merge(T& arr, int left, int mid, int right)

@@ -3,19 +3,65 @@
 int main(int ac, char **av) {
     std::vector<Node*> vec;
     std::deque<Node*> deq;
+    std::vector<int> tmp;
 
     check_and_fill(ac, av, vec, deq);
     adjust(vec, deq);
 
-    while (vec.size() > 2){
-        vec = reduce(vec);
-    }
+    tmp.push_back(1);
+    tmp.push_back(2);
+    tmp.push_back(5);
+    tmp.push_back(6);
+    tmp.push_back(8);
+    // Node *tmp = new Node(4);
 
+    // std::cout << BST(vec, 0, vec.size() - 1, tmp) << std::endl;
 
-    std::cout << (*vec[0]) << std::endl;
-    std::cout << (*vec[1]) << std::endl;
+    // std::vector<Node*>::const_iterator it = getIterator(vec, BST(vec, 0, vec.size() - 1, tmp));
+
+    // vec.insert(vec.begin()+ BST(vec, 0, vec.size() - 1, tmp), tmp);
+
+    // vec = reduce(vec);
+
+        std::cout << tmp.back()<< std::endl;
+    std::vector<int> jacob = generateJacobsthal(8);
+    // while (1)
+    // {
+    //     j = generateJacobsthal(i);
+    //     if (j >= size)
+    //     {
+    //         jacob.push_back(size);
+    //         break ;
+    //     }
+    //     jacob.push_back(j);
+    //     ++i;
+    // }
+    for (std::vector<int>::iterator it=jacob.begin(); it != jacob.end(); it++)
+        std::cout  << (*it)<< " ";
+    std::cout <<std::endl;
+
+    // std::cout << "final value after reduction : "<<vec[0]->getValue() << "\n" << std::endl;
     
-    // deq[0]->deleteArr();
+    // std::cout << (*vec[0]) << std::endl;
+
+    // vec = expand(vec);
+    
+    // for(std::vector<Node*>::iterator it = vec.begin(); it !=vec.end(); ++it)
+    // {
+    //     if ((*it)->getValue() == -1)
+    //         vec.erase(it);
+    //     std::cout << (*it)->getValue() << " ";
+    // }
+    // std::cout << std::endl;
+    // for(std::vector<Node*>::iterator it = vec.begin(); it !=vec.end(); ++it)
+    // {
+    //     if ((*it)->getValue() == -1)
+    //         vec.erase(it);
+    //     std::cout << (*it)->getValue() << " ";
+    // }
+    // std::cout << std::endl;
+
+    deq[0]->deleteArr();
     vec[0]->deleteArr();
     return 0;
 }

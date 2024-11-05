@@ -66,96 +66,82 @@ std::vector<Node*>    reduce(std::vector<Node*> arr)
             res.push_back(new Node(v2, v1));
         i += 2;
     }
+    if (res.size() == 1)
+        return res;
+    return reduce(res);
+}
+
+int BST(std::vector<Node*> arr, int low, int high, Node *x)
+{
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        if (arr.at(mid)->getValue() == x->getValue())
+            return mid;
+        if (arr.at(mid)->getValue() < x->getValue())
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+    return low;
+}
+
+std::vector<Node*>::iterator getIterator(std::vector<Node*> arr, int index)
+{
+    std::vector<Node*>::iterator it = arr.begin();
+    for (int i = 0; i < index; ++i){
+        ++it;
+    }
+    return it;
+}
+
+Node    *nodeSelect(std::vector<Node*> pend, std::vector<int> jacob)
+{
+    int size = pend.size();
+    
+    return (pend[0]);
+}
+
+std::vector<Node*>    expand(std::vector<Node*> arr)
+{
+    std::vector<Node*> res;
+    std::vector<Node*> pend;
+    // int size = arr.size(), i = 0, count = 0, j = 0, j1, j2;
+    for (std::vector<Node*>::iterator it = arr.begin(); it != arr.end(); ++it){
+        res.push_back((*it)->getV1());
+        pend.push_back((*it)->getV2());
+    }
+    unsigned long count= 0;
+    std::vector<int> jacob = generateJacobsthal(pend.size());
+    while (pend.size() > 0){
+        Node *node = nodeSelect(pend,jacob);
+        res.insert(res.begin() + BST(res, 0, res.size() - 1, node), node);
+        ++count;
+    }
+    if (res[0]->isPair())
+        return (expand(res));
     return res;
 }
 
-// void    dichotomicSearch(std::vector<Node*> &arr, Node *n)
-// {
-// }
-
-// void BST(std::vector<Node*> &arr)
-// {
-//     int value = n->getV2()->getValue();
-//     if(arr.size() == 0)
-//         arr.push_back(new Node(n));
-//     // if(arr.size() == 1)
-//     //     arr.push_back(new Node(n->getV2()));
-//     else if(n->getValue() < n->getValue())
-//         n->left = insert(n->getValue(), n->left);
-//     else if(n->getValue() > n->getValue())
-//         n->right = insert(n->getValue(), n->right);
-//     else
-//         arr.insert()
-// }
-
-// std::vector<Node*>    expand(std::vector<Node*> arr)
-// {
-//     std::vector<Node*> res;
-//     int size = arr.size(), i = 0, count = 0, j = 0, j1, j2;
-
-//     // if (size == 0){
-//     //     res.push_back(new Node(arr[0]->getV1()));
-//     // }
-
-//     while (count < size){
-//         // j1 = generateJacobsthal(j) - 1;
-//         // j2 = generateJacobsthal(j + 1) - 1;
-//         // if (j2 > size)
-//         //     j2 = size - 1;
-//         // while (j1 > j2)
-//         // {
-//         //     j2 = generateJacobsthal(i) - generateJacobsthal(i - 1);
-//         //     --j2;
-//         //     dichotomicSearch(res, arr[j2]);
-//         // }
-//         // i += j2-j1;
-//         // ++j;
-//         // BST(res);
-//         ++count;
-//     }
-
-//     return res;
-// }
-
-int generateJacobsthal(int count)
+std::vector<int> generateJacobsthal(int size)
 {
-    if (count <= 0)
-        return 0;
-    std::vector<int> sequence;
-    sequence.push_back(0);
-    sequence.push_back(1);
-    for (int i = 2; i < count; ++i)
-        sequence.push_back(sequence.at(i-1) + 2 * sequence.at(i-2));
-    return sequence.at(count-1);
+    std::vector<int> jacob;
+    if (size <= 0)
+        return (jacob.push_back(0), jacob);
+    jacob.push_back(0);
+    jacob.push_back(1);
+    int i = 2;
+    while (jacob.back() < size)
+    {
+        jacob.push_back(jacob.at(i-1) + 2 * jacob.at(i-2));
+        ++i;
+    }
+    jacob.back() = size;
+    return jacob;
 };
 
 std::ostream &  operator<<(std::ostream & o, Node & rhs)
 {
-    rhs.showPair(o);
+    rhs.printArray(o);
+    // rhs.showPair(o);
 	return (o);
 }
-
-
-
-// void mergeInsert(std::vector<Node*> &arr, int depth)
-// {
-//     //! remove v
-//     std::cout << std::endl;
-//     print_array(arr);
-//     //! remove ^
- 
-//     ++depth;
-//     int size = arr.size() / pow(2, depth);
-//     if (size == 0)
-//         return;
-//     std::cout << "depth : " << depth << "\nsize : " << size << std::endl;
-//     for(int i = 0; i < size; ++i)
-//     {
-//         if (arr.at(i) < arr.at(i + size))
-//         {
-//             ft_swap(arr.at(i), arr.at(i + size));
-//         }
-//     }
-//     mergeInsert(arr, depth);
-// }
-
