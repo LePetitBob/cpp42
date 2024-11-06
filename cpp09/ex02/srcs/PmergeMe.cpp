@@ -1,6 +1,6 @@
 #include "PmergeMe.hpp"
 
-void	check_and_fill(int ac, char **av, std::vector<Node*> &v, std::deque<Node*> &d)
+void	check_and_fill(int ac, char **av, std::vector<Node*> &v, std::deque<Node*> &deq)
 {
     Node n;
 	for (int i = 1; i < ac; i++)
@@ -29,8 +29,8 @@ void	check_and_fill(int ac, char **av, std::vector<Node*> &v, std::deque<Node*> 
         if (it == v.end())
         {
             v.push_back(new Node(atoi(av[i])));
-            // d.push_back(new Node(atoi(av[i])));
-            d.size();
+            // deq.push_back(new Node(atoi(av[i])));
+            deq.size();//! To avoid unused variable
         }
 	}
 }
@@ -94,11 +94,25 @@ std::vector<Node*>::iterator getIterator(std::vector<Node*> arr, int index)
     return it;
 }
 
-Node    *nodeSelect(std::vector<Node*> pend, std::vector<int> jacob)
+std::vector<int>    nodeSelect(std::vector<Node*> pend, std::vector<int> jacob)
 {
+    std::vector<int> res;
     int size = pend.size();
-    
-    return (pend[0]);
+    size = jacob.size();
+    res.push_back(0);
+    if (jacob.size() == 1)
+        return res;
+    res.push_back(1);
+    if (jacob.size() == 2)
+        return res;
+    for (std::vector<int>::iterator it = jacob.begin() + 2 ; it != jacob.end(); ++it){
+        std::cout << (*it) << " ";
+        for(int i = (*it); i >= res.back(); --i){
+            res.push_back(i);
+        }
+    }
+    std::cout << std::endl;
+    return (res);
 }
 
 std::vector<Node*>    expand(std::vector<Node*> arr)
@@ -110,12 +124,11 @@ std::vector<Node*>    expand(std::vector<Node*> arr)
         res.push_back((*it)->getV1());
         pend.push_back((*it)->getV2());
     }
-    unsigned long count= 0;
-    std::vector<int> jacob = generateJacobsthal(pend.size());
-    while (pend.size() > 0){
-        Node *node = nodeSelect(pend,jacob);
-        res.insert(res.begin() + BST(res, 0, res.size() - 1, node), node);
-        ++count;
+    // unsigned long size = pend.size(), i = 0;
+    std::vector<int> jacob = generateJacobsthal(pend.at(0)->getValue());
+    std::vector<int> order = nodeSelect(pend,jacob);
+    for (std::vector<int>::iterator it = order.begin(); it != order.end(); ++it){
+        res.insert(res.begin() + BST(res, 0, res.size() - 1, pend.at((*it))), pend.at(jacob.at(*it)));
     }
     if (res[0]->isPair())
         return (expand(res));
@@ -128,7 +141,11 @@ std::vector<int> generateJacobsthal(int size)
     if (size <= 0)
         return (jacob.push_back(0), jacob);
     jacob.push_back(0);
+    if (size == 1)
+        return jacob;
     jacob.push_back(1);
+    if (size == 2)
+        return jacob;
     int i = 2;
     while (jacob.back() < size)
     {
@@ -136,6 +153,11 @@ std::vector<int> generateJacobsthal(int size)
         ++i;
     }
     jacob.back() = size;
+    std::cout << "\nprint genjac\n" << std::endl;
+    for (std::vector<int>::iterator it = jacob.begin() + 2 ; it != jacob.end(); ++it){
+        std::cout << (*it) << " ";
+    }
+    std::cout << "\nend genjac\n" << std::endl;
     return jacob;
 };
 

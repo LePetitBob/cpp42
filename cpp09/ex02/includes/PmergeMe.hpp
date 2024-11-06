@@ -86,9 +86,9 @@ public:
 
 std::ostream &  operator<<(std::ostream & o, Node & rhs);
 
-Node    *nodeSelect(std::vector<Node*> pend, std::vector<int> jacob);
+std::vector<int> nodeSelect(std::vector<Node*> pend, std::vector<int> jacob);
 std::vector<Node*>    reduce(std::vector<Node*> arr);
-void	check_and_fill(int ac, char **av, std::vector<Node*> &v, std::deque<Node*> &d);
+void	check_and_fill(int ac, char **av, std::vector<Node*> &v, std::deque<Node*> &deq);
 void    adjust(std::vector<Node*> &vec, std::deque<Node*> &deq);
 std::vector<Node*>    expand(std::vector<Node*> arr);
 std::vector<Node*>::iterator getIterator(std::vector<Node*> arr, int index);
