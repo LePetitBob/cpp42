@@ -9,9 +9,9 @@ int	isOperand(char c)
 	return 0;
 }
 
-void	ApplyOperand(std::stack<int> & pile, char o, int *operand)
+void	ApplyOperand(std::stack<int> &pile, char o, int *operand)
 {
-	if (pile.size() <= 1)
+	if (pile.size() < 2)
 	{
 		if (o == '-')
 		{
@@ -23,30 +23,28 @@ void	ApplyOperand(std::stack<int> & pile, char o, int *operand)
 		}
 		else
 		{
-			std::cout << "Error\nRPN is incorrect" << std::endl;
+			std::cerr << "Error\nRPN is incorrect" << std::endl;
 			exit(1);
 		}
 	}
-	if (pile.size() < 2)
-		return ;
-	int tmp = pile.top();
+	int b = pile.top();
 	pile.pop();
-	int tmp2 = pile.top();
+	int a = pile.top();
 	pile.pop();
 	if (o == '+')
-		pile.push(tmp + tmp2);
+		pile.push(a + b);
 	else if (o == '-')
-		pile.push(tmp2 - tmp);
+		pile.push(a - b);
 	else if (o == '*')
-		pile.push(tmp * tmp2);
+		pile.push(a * b);
 	else if (o == '/')
 	{
-		if (tmp == 0)
+		if (b == 0)
 		{
-			std::cout << "Error\nDivision by zero" << std::endl;
+			std::cerr << "Error\nDivision by zero" << std::endl;
 			exit(1);
 		}
-		pile.push(tmp2 / tmp);
+		pile.push(a / b);
 	}
 	return ;
 }

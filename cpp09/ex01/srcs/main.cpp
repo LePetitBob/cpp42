@@ -10,31 +10,38 @@ int main( int ac, char **av )
 	if (ac != 2)
 	{
 		if (ac > 2)
-			std::cout << "Error\nToo many arguments" << std::endl;
+			std::cerr << "Error\nToo many arguments" << std::endl;
 		if (ac < 2)
-			std::cout << "Error\nToo few arguments" << std::endl;
+			std::cerr << "Error\nToo few arguments" << std::endl;
 		return 0;
 	}
 	i = 0;
 	while(av[1][i])
 	{
-		if (av[1][i] == ' ')
-			++i;
-		else if (isdigit(av[1][i]) && av[1][i + 1] == ' ')
-		{
+		if (isdigit(av[1][i]))
 			++values;
+		else if (isOperand(av[1][i]))
+			++operands;
+		else if (av[1][i] != ' ')
+			return (std::cerr << "Error\nInvalid character" << std::endl, 1);
+		++i;
+	}
+	if (operands != values - 1)	
+		return (std::cerr << "Error\nRPN is incorrect" << std::endl, 1);
+	i = 0;
+	while(av[1][i])
+	{
+		if (isdigit(av[1][i]))
 			pile.push(av[1][i] - 48);
-			++i;
-		}
-		else
+		else if (isOperand(av[1][i]))
+			ApplyOperand(pile, av[1][i], &operands);
+		else if (av[1][i] != ' ')
 		{
-			std::cout << "Error\nRPN is incorrect" << std::endl;
+			std::cerr << "Error\nRPN is incorrect" << std::endl;
 			return (0);
 		}
+		++i;
 	}
-	if (operands == values - 1)	
-		std::cout << pile.top() << std::endl;
-	else
-		std::cout << "Error\nRPN is incorrect" << std::endl;
+	std::cout << pile.top() << std::endl;
 	return 0;
 }
