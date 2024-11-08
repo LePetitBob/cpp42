@@ -4,105 +4,40 @@ int main(int ac, char **av) {
     std::vector<Node*> vec;
     std::deque<Node*> deq;
     std::vector<int> tmp;
+	struct timeval tp, tp2;
 
     check_and_fill(ac, av, vec, deq);
-    adjust(vec, deq);
 
-    // tmp.push_back(1);
-    // tmp.push_back(2);
-    // tmp.push_back(5);
-    // tmp.push_back(6);
-    // tmp.push_back(8);
-    // Node *tmp = new Node(4);
-
-    // std::cout << BST(vec, 0, vec.size() - 1, tmp) << std::endl;
-
-    // vec.insert(vec.begin()+ BST(vec, 0, vec.size() - 1, tmp), tmp);
-
+    std::cout << "Before : ";
     for (std::vector<Node*>::iterator it=vec.begin(); it != vec.end(); it++)
         std::cout  << (*it)->getValue() << " ";
     std::cout <<std::endl;
 
-    vec = reduce(vec);
+    adjust(vec, deq);
 
+    gettimeofday(&tp, NULL);
+    FordJohnson(vec);
+    gettimeofday(&tp2, NULL);
 
-    // std::cout << "final value after reduction : "<<vec[0]->getValue() << "\n" << std::endl;
-    
-    // std::cout << (*vec[0]) << std::endl;
+    std::cout << "After  : ";
+    for (std::vector<Node*>::iterator it=vec.begin(); it != vec.end(); it++)
+        if ((*it)->getValue() != -1)
+            std::cout  << (*it)->getValue() << " ";
+    std::cout <<std::endl;
 
-    vec = expand(vec);
-    
-    // for(std::vector<Node*>::iterator it = vec.begin(); it !=vec.end(); ++it)
-    // {
-    //     if ((*it)->getValue() == -1)
-    //         vec.erase(it);
-    //     std::cout << (*it)->getValue() << " ";
-    // }
-    // std::cout << std::endl;
-    for(std::vector<Node*>::iterator it = vec.begin(); it !=vec.end(); ++it)
-    {
-        if ((*it)->getValue() == -1)
-            vec.erase(it);
-        std::cout << (*it)->getValue() << " ";
-    }
-    // std::cout << std::endl;
+	unsigned long micro = tp.tv_usec + 1000000 * tp.tv_sec, micro2 = tp2.tv_usec + 1000000 * tp2.tv_sec;
+    std::cout << "Time to process a range of "<< ac - 1 <<" elements with std::vector : " << micro2 - micro << " us" << std::endl;
 
-    // deq[0]->deleteArr();
+    gettimeofday(&tp, NULL);
+    FordJohnson(deq);
+    gettimeofday(&tp2, NULL);
+
+	micro = tp.tv_usec + 1000000 * tp.tv_sec, micro2 = tp2.tv_usec + 1000000 * tp2.tv_sec;
+    std::cout << "Time to process a range of "<< ac - 1 <<" elements with std::deque  : " << micro2 - micro << " us" << std::endl;
+
+    deq[0]->deleteArr();
     vec[0]->deleteArr();
     return 0;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// struct timeval tp, tp2;
-
-    // gettimeofday(&tp, NULL);
-    // mergeInsert(vec, 0);
-    // gettimeofday(&tp2, NULL);
-
-    // for(std::vector<Node*>::iterator it = vec.end() - 1; (*it)->getValue() == -1; --it)
-    //     vec.pop_back();
-    // std::cout << "MORTECOUILLE" << std::endl;
-    // std::cout << "After : ";
-    // print_array(vec);
-
-	// unsigned long micro = tp.tv_usec + 1000000 * tp.tv_sec, micro2 = tp2.tv_usec + 1000000 * tp2.tv_sec;
-    // std::cout << "Time to process a range of "<< ac - 1 <<" elements with std::vector : " << micro2 - micro << " us" << std::endl;
-
-    // gettimeofday(&tp, NULL);
-    // mergeInsertionSort<std::deque<int> >(deq);
-    // gettimeofday(&tp2, NULL);
-
-	// micro = tp.tv_usec + 1000000 * tp.tv_sec, micro2 = tp2.tv_usec + 1000000 * tp2.tv_sec;
-    // std::cout << "Time to process a range of "<< ac - 1 <<" elements with std::deque : " << micro2 - micro << " us" << std::endl;

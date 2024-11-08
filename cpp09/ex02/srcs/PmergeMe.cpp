@@ -1,5 +1,60 @@
 #include "PmergeMe.hpp"
 
+std::ostream &  operator<<(std::ostream & o, Node & rhs)
+{
+    rhs.printArray(o);
+    // rhs.showPair(o);
+	return (o);
+}
+
+int Node::getValue(){
+    if(v1)
+        return v1->getValue();
+    return value;
+}
+
+Node *Node::getV1(){
+    return v1;
+}
+
+Node *Node::getV2(){
+    return v2;
+}
+
+int Node::isPair(){
+    return v1 && v2;
+}
+
+void Node::showPair(std::ostream & o) {
+    if (this->isPair()) {
+        v1->showPair(o);
+        o << "/";
+        v2->showPair(o);
+        o << " ";
+    } else {
+        o << value;
+    }
+}
+
+void Node::printArray(std::ostream & o) {
+    if (this->isPair()) {
+        v1->printArray(o);
+        o << " ";
+        v2->printArray(o);
+    } else {
+        if (value != -1)
+            o << value;
+    }
+}
+
+void Node::deleteArr(){
+    if (v1 && v2) {
+        v1->deleteArr();
+        v2->deleteArr();
+    }
+    delete this;
+}
+
 void	check_and_fill(int ac, char **av, std::vector<Node*> &v, std::deque<Node*> &deq)
 {
     Node n;
@@ -29,8 +84,8 @@ void	check_and_fill(int ac, char **av, std::vector<Node*> &v, std::deque<Node*> 
         if (it == v.end())
         {
             v.push_back(new Node(atoi(av[i])));
-            // deq.push_back(new Node(atoi(av[i])));
-            deq.size();//! To avoid unused variable
+            deq.push_back(new Node(atoi(av[i])));
+            deq.size();
         }
 	}
 }
@@ -43,13 +98,68 @@ void    adjust(std::vector<Node*> &vec, std::deque<Node*> &deq)
     while (size < pow(2, n))
     {
         vec.push_back(new Node());
-        // deq.push_back(new Node());
+        deq.push_back(new Node());
         deq.size();
         ++size;
     }
 }
 
+std::vector<int> nodeSelect(int size, std::vector<int> jacob)
+{
+    std::vector<int> res;
+    size = jacob.size();
+    res.push_back(0);
+    if (jacob.size() == 1)
+        return res;
+    res.push_back(1);
+    if (jacob.size() == 2)
+        return res;
+    for (std::vector<int>::iterator it = jacob.begin() + 2; it != jacob.end() - 1; ++it){
+        for(int i = (*it); i > (*(it - 1)); --i){
+            res.push_back(i);
+        }
+    }
+    return (res);
+}
 
+std::vector<int> generateJacobsthal(int size)
+{
+    std::vector<int> jacob;
+    if (size <= 0)
+        return (jacob.push_back(0), jacob);
+    jacob.push_back(0);
+    if (size == 1)
+        return jacob;
+    jacob.push_back(1);
+    if (size == 2)
+        return jacob;
+    int i = 2;
+    while (jacob.back() < size)
+    {
+        jacob.push_back(jacob.at(i-1) + 2 * jacob.at(i-2));
+        ++i;
+    }
+    jacob.back() = size;
+    return jacob;
+};
+
+std::vector<Node*>    expand(std::vector<Node*> arr)
+{
+    std::vector<Node*> res;
+    std::vector<Node*> pend;
+    for (std::vector<Node*>::iterator it = arr.begin(); it != arr.end(); ++it){
+        res.push_back((*it)->getV1());
+        pend.push_back((*it)->getV2());
+    }
+    std::vector<int> jacob = generateJacobsthal(pend.size());
+    std::vector<int> order = nodeSelect(pend.size(),jacob);
+    for (std::vector<int>::iterator it = order.begin(); it != order.end(); ++it){
+        res.insert(res.begin() + BST<std::vector<Node*> >(res, 0, res.size() - 1, pend.at((*it))), pend.at((*it)));
+    }
+    if (res[0]->isPair())
+        return (expand(res));
+    return res;
+}
 
 std::vector<Node*>    reduce(std::vector<Node*> arr)
 {
@@ -71,99 +181,50 @@ std::vector<Node*>    reduce(std::vector<Node*> arr)
     return reduce(res);
 }
 
-int BST(std::vector<Node*> arr, int low, int high, Node *x)
+std::deque<Node*>    expand(std::deque<Node*> arr)
 {
-    while (low <= high) {
-        int mid = low + (high - low) / 2;
-        if (arr.at(mid)->getValue() == x->getValue())
-            return mid;
-        if (arr.at(mid)->getValue() < x->getValue())
-            low = mid + 1;
-        else
-            high = mid - 1;
-    }
-    return low;
-}
-
-std::vector<Node*>::iterator getIterator(std::vector<Node*> arr, int index)
-{
-    std::vector<Node*>::iterator it = arr.begin();
-    for (int i = 0; i < index; ++i){
-        ++it;
-    }
-    return it;
-}
-
-std::vector<int>    nodeSelect(std::vector<Node*> pend, std::vector<int> jacob)
-{
-    std::vector<int> res;
-    int size = pend.size();
-    size = jacob.size();
-    res.push_back(0);
-    if (jacob.size() == 1)
-        return res;
-    res.push_back(1);
-    if (jacob.size() == 2)
-        return res;
-    for (std::vector<int>::iterator it = jacob.begin() + 2 ; it != jacob.end(); ++it){
-        std::cout << (*it) << " ";
-        for(int i = (*it); i >= res.back(); --i){
-            res.push_back(i);
-        }
-    }
-    std::cout << std::endl;
-    return (res);
-}
-
-std::vector<Node*>    expand(std::vector<Node*> arr)
-{
-    std::vector<Node*> res;
-    std::vector<Node*> pend;
-    // int size = arr.size(), i = 0, count = 0, j = 0, j1, j2;
-    for (std::vector<Node*>::iterator it = arr.begin(); it != arr.end(); ++it){
+    std::deque<Node*> res;
+    std::deque<Node*> pend;
+    for (std::deque<Node*>::iterator it = arr.begin(); it != arr.end(); ++it){
         res.push_back((*it)->getV1());
         pend.push_back((*it)->getV2());
     }
-    // unsigned long size = pend.size(), i = 0;
-    std::vector<int> jacob = generateJacobsthal(pend.at(0)->getValue());
-    std::vector<int> order = nodeSelect(pend,jacob);
+    std::vector<int> jacob = generateJacobsthal(pend.size());
+    std::vector<int> order = nodeSelect(pend.size(),jacob);
     for (std::vector<int>::iterator it = order.begin(); it != order.end(); ++it){
-        res.insert(res.begin() + BST(res, 0, res.size() - 1, pend.at((*it))), pend.at(jacob.at(*it)));
+        res.insert(res.begin() + BST<std::deque<Node*> >(res, 0, res.size() - 1, pend.at((*it))), pend.at((*it)));
     }
     if (res[0]->isPair())
         return (expand(res));
     return res;
 }
 
-std::vector<int> generateJacobsthal(int size)
+std::deque<Node*>    reduce(std::deque<Node*> arr)
 {
-    std::vector<int> jacob;
-    if (size <= 0)
-        return (jacob.push_back(0), jacob);
-    jacob.push_back(0);
-    if (size == 1)
-        return jacob;
-    jacob.push_back(1);
-    if (size == 2)
-        return jacob;
-    int i = 2;
-    while (jacob.back() < size)
+    std::deque<Node*> res;
+    int size = arr.size(), i = 0;
+    Node *v1, *v2;
+    while (i < size)
     {
-        jacob.push_back(jacob.at(i-1) + 2 * jacob.at(i-2));
-        ++i;
+        v1 = arr.at(i);
+        v2 = arr.at(i + 1);
+        if (v1->getValue() > v2->getValue())
+            res.push_back(new Node(v1, v2));
+        else
+            res.push_back(new Node(v2, v1));
+        i += 2;
     }
-    jacob.back() = size;
-    std::cout << "\nprint genjac\n" << std::endl;
-    for (std::vector<int>::iterator it = jacob.begin() + 2 ; it != jacob.end(); ++it){
-        std::cout << (*it) << " ";
-    }
-    std::cout << "\nend genjac\n" << std::endl;
-    return jacob;
-};
+    if (res.size() == 1)
+        return res;
+    return reduce(res);
+}
 
-std::ostream &  operator<<(std::ostream & o, Node & rhs)
-{
-    rhs.printArray(o);
-    // rhs.showPair(o);
-	return (o);
+void FordJohnson(std::vector<Node*> &arr){
+    arr = reduce(arr);
+    arr = expand(arr);
+}
+
+void FordJohnson(std::deque<Node*> &arr){
+    arr = reduce(arr);
+    arr = expand(arr);
 }
