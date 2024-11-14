@@ -6,6 +6,11 @@ int main(int ac, char **av) {
     std::vector<int> tmp;
 	struct timeval tp, tp2;
 
+    if (ac < 2)
+    {
+        std::cout << "Error:  Missing argument" << std::endl;
+        return (1);
+    }
     check_and_fill(ac, av, vec, deq);
 
     std::cout << "Before : ";
