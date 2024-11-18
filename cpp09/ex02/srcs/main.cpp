@@ -6,11 +6,11 @@ int main(int ac, char **av) {
     std::vector<int> tmp;
 	struct timeval tp, tp2;
 
-    if (ac < 2)
-    {
-        std::cout << "Error:  Missing argument" << std::endl;
-        return (1);
+    if (ac < 2){
+        std::cout << "Error:\nwrong number of arguments. Expected 2." << std::endl;
+        return 1;
     }
+
     check_and_fill(ac, av, vec, deq);
 
     std::cout << "Before : ";
@@ -21,7 +21,9 @@ int main(int ac, char **av) {
     adjust(vec, deq);
 
     gettimeofday(&tp, NULL);
-    FordJohnson(vec);
+    if (ac > 2){
+        FordJohnson(vec);
+    }
     gettimeofday(&tp2, NULL);
 
     std::cout << "After  : ";
@@ -34,7 +36,9 @@ int main(int ac, char **av) {
     std::cout << "Time to process a range of "<< ac - 1 <<" elements with std::vector : " << micro2 - micro << " us" << std::endl;
 
     gettimeofday(&tp, NULL);
-    FordJohnson(deq);
+    if (ac > 2){
+        FordJohnson(deq);
+    }
     gettimeofday(&tp2, NULL);
 
 	micro = tp.tv_usec + 1000000 * tp.tv_sec, micro2 = tp2.tv_usec + 1000000 * tp2.tv_sec;
